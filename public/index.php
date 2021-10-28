@@ -1,6 +1,8 @@
 <?php
 ini_set('date.timezone', 'Europe/London');
 
+$domain = $_SERVER['SERVER_NAME'];
+
 function GetIP(){
     $ipaddress = '';
     if (getenv('HTTP_CLIENT_IP'))
@@ -76,7 +78,7 @@ try {
     <meta property="og:type" content="website" />
     <meta property="og:title" content="<?=  $greet . ' ' . $row['city']; ?>." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://bomdia.fun/?gid=<?= $_GET['gid'] . ($lunch ? '&l=1' : '') ?>" />
+    <meta property="og:url" content="https://<?= $domain ?>/?gid=<?= $_GET['gid'] . ($lunch ? '&l=1' : '') ?>" />
     <meta name="description" content="Gerador de bons dias, boas tardes e boas noites">
     <meta property="og:description" content="Gerador de bons dias, boas tardes e boas noites" />
 
@@ -196,7 +198,7 @@ try {
             <input id="greet" type="text" class="text" value="<?= $greet . ' ' . $row['city']; ?>." />
             <button><i class="fa fa-clone"></i></button>
         </div>
-        <a href="https://bomdia.fun<?= ($lunch ? '/?l=1' : '') ?>" style="color: white;padding: 4px;">Refresh</a>
+        <a href="https://<?= $domain ?><?= ($lunch ? '/?l=1' : '') ?>" style="color: white;padding: 4px;">Refresh</a>
     </div>
 
     <iframe width="100%" height="600" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC_DQVcC5Tg6tdX3J4Wmah9GQiuHNd3yIQ&center=<?= $row['lat'] . ',' . $row['lng'] ?>&zoom=16&maptype=satellite"></iframe>
