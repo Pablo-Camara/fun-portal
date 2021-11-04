@@ -65,6 +65,14 @@ try {
 } catch (PDOException $err) {
     echo "ERROR: Unable to connect: " . $err->getMessage();
 }
+
+$qotd = 'QOTD: Concentrate all your thoughts upon the work in hand.';
+
+$metaDesc = 'Gerador de bons dias, boas tardes e boas noites';
+
+if(isset($_GET['gid'])){
+    $metaDesc = $qotd;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,8 +87,8 @@ try {
     <meta property="og:title" content="<?=  $greet . ' ' . $row['city']; ?>." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://<?= $domain ?>/?gid=<?= $_GET['gid'] . ($lunch ? '&l=1' : '') ?>" />
-    <meta name="description" content="Gerador de bons dias, boas tardes e boas noites">
-    <meta property="og:description" content="Gerador de bons dias, boas tardes e boas noites" />
+    <meta name="description" content="<?= $metaDesc ?>">
+    <meta property="og:description" content="<?= $metaDesc ?>" />
 
     <title><?=  $greet . ' ' . $row['city']; ?>.</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
