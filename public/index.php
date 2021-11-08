@@ -66,7 +66,8 @@ try {
     echo "ERROR: Unable to connect: " . $err->getMessage();
 }
 
-$qotd = 'QOTD: Concentrate all your thoughts upon the work in hand.';
+//$qotd = 'QOTD: Concentrate all your thoughts upon the work in hand.';
+$qotd = 'QOTD: The future depends on what you do today.';
 
 $metaDesc = 'Gerador de bons dias, boas tardes e boas noites';
 
