@@ -424,7 +424,7 @@ if (!is_null($geoLocationId)) {
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, $countryCode) ?>" style="color: white;padding: 4px;">Refresh</a>
     </div>
 
-    <iframe style="margin-top: 26px" width="100%" height="600" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC_DQVcC5Tg6tdX3J4Wmah9GQiuHNd3yIQ&center=<?= $geoLocation['lat'] . ',' . $geoLocation['lng'] ?>&zoom=16&maptype=satellite"></iframe>
+    <iframe style="margin-top: 26px; border: 0" width="100%" height="600" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC_DQVcC5Tg6tdX3J4Wmah9GQiuHNd3yIQ&center=<?= $geoLocation['lat'] . ',' . $geoLocation['lng'] ?>&zoom=16&maptype=satellite"></iframe>
 
     
     <script src="/assets/js/script.js?v=0.023"></script>
