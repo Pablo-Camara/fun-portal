@@ -166,18 +166,24 @@ if (!is_null($geoLocationId)) {
             margin: revert;
             padding: revert;
         }
+
+        .country-flags {
+            position: absolute;
+            width: 100%;
+            right: 0;
+            overflow-x: auto;
+            height: 23px;
+            text-align: center;
+        }
+
+        .country-flags a {
+            display: inline;
+        }
     </style>
 </head>
 
 <body>
-    <div style="
-    position: absolute;
-    width: 100%;
-    right: 0;
-    overflow: auto;
-    height: 23px;
-    text-align: center;
-">
+    <div class="country-flags">
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, 'SY') ?>"><img src="/assets/img/flags/4x3/sy.svg" width="30" /></a>
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, 'JO') ?>"><img src="/assets/img/flags/4x3/jo.svg" width="30" /></a>
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, 'AE') ?>"><img src="/assets/img/flags/4x3/ae.svg" width="30" /></a>
