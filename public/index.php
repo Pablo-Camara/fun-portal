@@ -174,6 +174,7 @@ if (!is_null($geoLocationId)) {
             overflow-x: auto;
             height: 23px;
             text-align: center;
+            white-space: nowrap;
         }
 
         .country-flags a {
