@@ -172,10 +172,10 @@ if (!is_null($geoLocationId)) {
 <body>
     <div style="
     position: absolute;
-    width: 50px;
+    width: 100%;
     right: 0;
     overflow: auto;
-    height: 600px;
+    height: 23px;
     text-align: center;
 ">
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, 'SY') ?>"><img src="/assets/img/flags/4x3/sy.svg" width="30" /></a>
@@ -424,7 +424,7 @@ if (!is_null($geoLocationId)) {
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, $countryCode) ?>" style="color: white;padding: 4px;">Refresh</a>
     </div>
 
-    <iframe width="100%" height="600" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC_DQVcC5Tg6tdX3J4Wmah9GQiuHNd3yIQ&center=<?= $geoLocation['lat'] . ',' . $geoLocation['lng'] ?>&zoom=16&maptype=satellite"></iframe>
+    <iframe style="margin-top: 26px" width="100%" height="600" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC_DQVcC5Tg6tdX3J4Wmah9GQiuHNd3yIQ&center=<?= $geoLocation['lat'] . ',' . $geoLocation['lng'] ?>&zoom=16&maptype=satellite"></iframe>
 
     
     <script src="/assets/js/script.js?v=0.023"></script>
