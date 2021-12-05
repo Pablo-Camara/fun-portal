@@ -399,18 +399,22 @@ if (!is_null($geoLocationId)) {
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, 'VA') ?>"><img src="/assets/img/flags/4x3/va.svg" width="30" /></a>
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, 'CW') ?>"><img src="/assets/img/flags/4x3/cw.svg" width="30" /></a>
     </div>
-    <!-- partial:index.partial.html -->
-    <div class="container" style="top: 20%">
-        <div class="copy-text" style="margin-bottom: 10px;">
-            <input id="greet" type="text" class="text" value="<?= $greet . ' ' . $geoLocation['city']; ?>." />
-            <button><i class="fa fa-clone"></i></button>
+    
+
+
+    <div style="position: relative">
+        <div class="container" style="top: 20%">
+            <div class="copy-text" style="margin-bottom: 10px;">
+                <input id="greet" type="text" class="text" value="<?= $greet . ' ' . $geoLocation['city']; ?>." />
+                <button><i class="fa fa-clone"></i></button>
+            </div>
+            <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, $countryCode) ?>" style="color: white;padding: 4px;">Refresh</a>
         </div>
-        <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, $countryCode) ?>" style="color: white;padding: 4px;">Refresh</a>
     </div>
 
     <iframe width="100%" height="600" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC_DQVcC5Tg6tdX3J4Wmah9GQiuHNd3yIQ&center=<?= $geoLocation['lat'] . ',' . $geoLocation['lng'] ?>&zoom=16&maptype=satellite"></iframe>
 
-    <!-- partial -->
+    
     <script src="/assets/js/script.js?v=0.023"></script>
 
 </body>
