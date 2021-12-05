@@ -77,6 +77,13 @@ if (!is_null($geoLocationId)) {
             transform: translate(-50%, -50%);
         }
 
+
+        @media (max-width: 375px){
+            .container {
+                left: 44%;
+             }
+        }
+
         .label {
             padding: 10px;
             font-size: 18px;
@@ -409,7 +416,7 @@ if (!is_null($geoLocationId)) {
     
 
 
-    <div class="container" style="top: 20%">
+    <div class="container" style="top: 50%">
         <div class="copy-text" style="margin-bottom: 10px;">
             <input id="greet" type="text" class="text" value="<?= $greet . ' ' . $geoLocation['city']; ?>." />
             <button><i class="fa fa-clone"></i></button>
