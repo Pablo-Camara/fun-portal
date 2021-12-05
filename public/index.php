@@ -163,7 +163,14 @@ if (!is_null($geoLocationId)) {
 </head>
 
 <body>
-    <div>
+    <div style="
+    position: absolute;
+    width: 50px;
+    right: 0;
+    overflow: auto;
+    height: 600px;
+    text-align: center;
+">
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, 'SY') ?>"><img src="/assets/img/flags/4x3/sy.svg" width="30" /></a>
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, 'JO') ?>"><img src="/assets/img/flags/4x3/jo.svg" width="30" /></a>
         <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, 'AE') ?>"><img src="/assets/img/flags/4x3/ae.svg" width="30" /></a>
