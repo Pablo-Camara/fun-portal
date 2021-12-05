@@ -409,14 +409,12 @@ if (!is_null($geoLocationId)) {
     
 
 
-    <div>
-        <div class="container" style="top: 20%">
-            <div class="copy-text" style="margin-bottom: 10px;">
-                <input id="greet" type="text" class="text" value="<?= $greet . ' ' . $geoLocation['city']; ?>." />
-                <button><i class="fa fa-clone"></i></button>
-            </div>
-            <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, $countryCode) ?>" style="color: white;padding: 4px;">Refresh</a>
+    <div class="container" style="top: 20%">
+        <div class="copy-text" style="margin-bottom: 10px;">
+            <input id="greet" type="text" class="text" value="<?= $greet . ' ' . $geoLocation['city']; ?>." />
+            <button><i class="fa fa-clone"></i></button>
         </div>
+        <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, $countryCode) ?>" style="color: white;padding: 4px;">Refresh</a>
     </div>
 
     <iframe width="100%" height="600" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC_DQVcC5Tg6tdX3J4Wmah9GQiuHNd3yIQ&center=<?= $geoLocation['lat'] . ',' . $geoLocation['lng'] ?>&zoom=16&maptype=satellite"></iframe>
