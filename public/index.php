@@ -409,7 +409,7 @@ if (!is_null($geoLocationId)) {
     
 
 
-    <div style="position: relative">
+    <div>
         <div class="container" style="top: 20%">
             <div class="copy-text" style="margin-bottom: 10px;">
                 <input id="greet" type="text" class="text" value="<?= $greet . ' ' . $geoLocation['city']; ?>." />
