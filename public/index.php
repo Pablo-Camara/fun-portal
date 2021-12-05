@@ -21,7 +21,7 @@ try {
         if (empty($geoLocation)) { header('Location: /'); }
     } else {
         $geoLocation = GeoLocation::getRandomGeoLocation($countryCode);
-        header('Location: ' . UrlHelper::getFullUrl($forceLunchGreet, $countryCode));
+        header('Location: ' . UrlHelper::getFullUrl($forceLunchGreet, $countryCode, $geoLocation['id']));
     }
 
     History::storeGeoLocationHistory($geoLocation['id'], UserConnection::getIP());
