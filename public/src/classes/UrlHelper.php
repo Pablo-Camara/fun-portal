@@ -30,7 +30,9 @@ class UrlHelper {
                 $domain .= $param;
             }
         }
+        $domain = 'https://' . $domain;
 
-        return 'https://' . $domain;
+        die($domain);
+        return $domain;
     }
 }
