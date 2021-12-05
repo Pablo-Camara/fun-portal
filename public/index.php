@@ -1,67 +1,31 @@
 <?php
 ini_set('date.timezone', 'Europe/London');
 
-$domain = $_SERVER['SERVER_NAME'];
+require_once './src/classes/Database.php';
+require_once './src/classes/UserConnection.php';
+require_once './src/classes/UrlHelper.php';
+require_once './src/classes/Greeting.php';
+require_once './src/classes/GeoLocation.php';
+require_once './src/classes/History.php';
 
-function GetIP(){
-    $ipaddress = '';
-    if (getenv('HTTP_CLIENT_IP'))
-        $ipaddress = getenv('HTTP_CLIENT_IP');
-    else if(getenv('HTTP_X_FORWARDED_FOR'))
-        $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-    else if(getenv('HTTP_X_FORWARDED'))
-        $ipaddress = getenv('HTTP_X_FORWARDED');
-    else if(getenv('HTTP_FORWARDED_FOR'))
-        $ipaddress = getenv('HTTP_FORWARDED_FOR');
-    else if(getenv('HTTP_FORWARDED'))
-        $ipaddress = getenv('HTTP_FORWARDED');
-    else if(getenv('REMOTE_ADDR'))
-        $ipaddress = getenv('REMOTE_ADDR');
-    else
-        $ipaddress = 'UNKNOWN';
 
-    return $ipaddress;
-}
-
-$lunch = isset($_GET['l']) && $_GET['l'] == 1 ? true : false;
-$currentHour = (int)date('H');
-$greet = $currentHour >= 5 && $currentHour < 13 ? 'Bom dia' : ($currentHour >= 13 && $currentHour <= 18 ? 'Boa tarde' : 'Boa noite');
-
-if($lunch){
-    $greet = 'Bom almoço, Até já';
-}
+$geoLocationId = isset($_GET['gid']) && !empty($_GET['gid']) ? $_GET['gid'] : null;
+$countryCode = isset($_GET['c']) && !empty($_GET['c']) ? $_GET['c'] : null;
+$forceLunchGreet = isset($_GET['l']) && $_GET['l'] == 1 ? true : false;
+$greet = Greeting::greet($forceLunchGreet);
 
 try {
-    $conn = new PDO("mysql:host=www-do-user-10001768-0.b.db.ondigitalocean.com:25060;dbname=defaultdb", "doadmin", "o2jsBVd23Q5y7Pgo");
-
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    if(isset($_GET['gid'])){
-        $sql = 'SELECT id,city,lat,lng FROM geolocation WHERE id = ? LIMIT 1';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$_GET['gid']]);
-        $row = $stmt->fetch();
-
-        if (empty($row)) { header('Location: /'); }
-    } else {
-        $sql = 'SELECT id,city,lat,lng FROM geolocation ORDER BY RAND() LIMIT 1';
-        $rows = [];
-        foreach ($conn->query($sql) as $row) {
-            $rows[] = $row;
-        };
     
-        $row = $rows[0];
-
-        header('Location: /?gid=' . $row['id'] . ($lunch ? '&l=1' : ''));
+    if(!is_null($geoLocationId)){
+        $geoLocation = GeoLocation::getById($geoLocationId);
+        if (empty($geoLocation)) { header('Location: /'); }
+    } else {
+        $geoLocation = GeoLocation::getRandomGeoLocation($countryCode);
+        header('Location: ' . UrlHelper::getFullUrl($forceLunchGreet, $countryCode));
     }
-   
 
-
-    $sql = "INSERT INTO history (geolocation_id, ip) VALUES (?,?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([$row['id'], GetIP()]);
-
-    $conn = null;
+    History::storeGeoLocationHistory($geoLocation['id'], UserConnection::getIP());
+    
 } catch (PDOException $err) {
     echo "ERROR: Unable to connect: " . $err->getMessage();
 }
@@ -71,7 +35,7 @@ $qotd = 'QOTD: The future depends on what you do today.';
 
 $metaDesc = 'Gerador de bons dias, boas tardes e boas noites';
 
-if(isset($_GET['gid'])){
+if(!is_null($geoLocationId)){
     $metaDesc = $qotd;
 }
 ?>
@@ -82,16 +46,16 @@ if(isset($_GET['gid'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta property="og:site_name" content="<?= $greet . ' ' . $row['city']; ?>.">
+    <meta property="og:site_name" content="<?= $greet . ' ' . $geoLocation['city']; ?>.">
     <meta property="og:locale" content="pt_PT">
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="<?=  $greet . ' ' . $row['city']; ?>." />
+    <meta property="og:title" content="<?=  $greet . ' ' . $geoLocation['city']; ?>." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://<?= $domain ?>/?gid=<?= $_GET['gid'] . ($lunch ? '&l=1' : '') ?>" />
+    <meta property="og:url" content="<?= UrlHelper::getFullUrl($forceLunchGreet, $countryCode, $geoLocationId) ?>" />
     <meta name="description" content="<?= $metaDesc ?>">
     <meta property="og:description" content="<?= $metaDesc ?>" />
 
-    <title><?=  $greet . ' ' . $row['city']; ?>.</title>
+    <title><?=  $greet . ' ' . $geoLocation['city']; ?>.</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <style>
         * {
@@ -200,20 +164,17 @@ if(isset($_GET['gid'])){
 <body>
     <!-- partial:index.partial.html -->
     <div class="container" style="top: 20%">
-        <div class="label">
-
-        </div>
         <div class="copy-text" style="margin-bottom: 10px;">
-            <input id="greet" type="text" class="text" value="<?= $greet . ' ' . $row['city']; ?>." />
+            <input id="greet" type="text" class="text" value="<?= $greet . ' ' . $geoLocation['city']; ?>." />
             <button><i class="fa fa-clone"></i></button>
         </div>
-        <a href="https://<?= $domain ?><?= ($lunch ? '/?l=1' : '') ?>" style="color: white;padding: 4px;">Refresh</a>
+        <a href="<?= UrlHelper::getFullUrl($forceLunchGreet, $countryCode) ?>" style="color: white;padding: 4px;">Refresh</a>
     </div>
 
-    <iframe width="100%" height="600" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC_DQVcC5Tg6tdX3J4Wmah9GQiuHNd3yIQ&center=<?= $row['lat'] . ',' . $row['lng'] ?>&zoom=16&maptype=satellite"></iframe>
+    <iframe width="100%" height="600" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyC_DQVcC5Tg6tdX3J4Wmah9GQiuHNd3yIQ&center=<?= $geoLocation['lat'] . ',' . $geoLocation['lng'] ?>&zoom=16&maptype=satellite"></iframe>
 
     <!-- partial -->
-    <script src="./script.js?v=0.023"></script>
+    <script src="/assets/js/script.js?v=0.023"></script>
 
 </body>
 
