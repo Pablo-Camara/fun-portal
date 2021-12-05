@@ -31,8 +31,7 @@ class UrlHelper {
             }
         }
         $domain = 'https://' . $domain;
-
-        die($domain);
+        
         return $domain;
     }
 }
