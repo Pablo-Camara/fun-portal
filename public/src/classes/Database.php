@@ -10,7 +10,7 @@ class Database {
      * @return PDO
      */
     public static function getNewPDOConnection(){
-        $conn = new PDO("mysql:host=www-do-user-10001768-0.b.db.ondigitalocean.com:25060;dbname=defaultdb", "doadmin", "o2jsBVd23Q5y7Pgo");
+        $conn = new PDO("mysql:host=db-mysql-fra1-10014-do-user-10634055-0.b.db.ondigitalocean.com:25060;dbname=defaultdb", "doadmin", "3SCXIcZS82Fs0Mns");
 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
