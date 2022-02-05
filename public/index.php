@@ -1,5 +1,6 @@
 <?php
 ini_set('date.timezone', 'Europe/London');
+die('Hello World, we are migrating, bye');
 
 require_once './src/classes/Database.php';
 require_once './src/classes/UserConnection.php';
